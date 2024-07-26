@@ -1,7 +1,7 @@
-import React from "react";
-
-const page = () => {
-    return <div>page</div>;
-};
-
-export default page;
+export default function dashboard() {
+    return (
+        <div>
+            <h1>Control Room</h1>
+        </div>
+    );
+}

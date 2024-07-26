@@ -89,7 +89,7 @@ const menuGroups = [
                     </svg>
                 ),
                 label: "Visual Analysis",
-                route: "/visual-analysis",
+                route: "/dashboard/visual-analysis",
             },
             {
                 icon: (
