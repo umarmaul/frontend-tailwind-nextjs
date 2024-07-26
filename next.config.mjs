@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ["194.238.16.213", "localhost"],
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "194.238.16.213",
+                port: "1122",
+                pathname: "/user/**",
+            },
+        ],
     },
 };
 

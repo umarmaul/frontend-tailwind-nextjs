@@ -13,7 +13,7 @@ export default function DashboardLayout({
     return (
         <>
             {/* <!-- ===== Page Wrapper Star ===== --> */}
-            <div className="flex h-screen overflow-hidden">
+            <div className="flex h-screen overflow-hidden bg-slate-100">
                 {/* <!-- ===== Sidebar Star ===== --> */}
                 <Sidebar
                     sidebarOpen={sidebarOpen}

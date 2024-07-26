@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
@@ -8,6 +8,32 @@ import { useRouter } from "next/navigation";
 const DropdownUser = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const Router = useRouter();
+    const [userDetails, setUserDetails] = useState({
+        name: "",
+        email: "",
+        profile_picture: "/images/user/user-03.png",
+    });
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            try {
+                const response = await axios.get("/api/users/me");
+                const userId = response.data.data._id;
+                const pictureResponse = await axios.get(
+                    `http://localhost:1122/api/v1/single-user/${userId}`
+                );
+                setUserDetails({
+                    name: response.data.data.name,
+                    email: response.data.data.email,
+                    profile_picture: pictureResponse.data.data.profile_picture,
+                });
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+            }
+        };
+
+        fetchUserDetails();
+    }, []);
 
     const logout = async () => {
         try {
@@ -32,7 +58,7 @@ const DropdownUser = () => {
                     <Image
                         width={112}
                         height={112}
-                        src="/images/user/user-03.png"
+                        src={userDetails.profile_picture}
                         style={{
                             width: "auto",
                             height: "auto",
@@ -43,7 +69,9 @@ const DropdownUser = () => {
                 </span>
 
                 <span className="flex items-center gap-2 font-medium text-dark dark:text-dark-6">
-                    <span className="hidden lg:block">Jhon Smith</span>
+                    <span className="hidden lg:block">
+                        {userDetails.name || "User"}
+                    </span>
 
                     <svg
                         className={`fill-current duration-200 ease-in ${
@@ -71,28 +99,12 @@ const DropdownUser = () => {
                     className={`absolute right-0 mt-7.5 flex w-[280px] flex-col rounded-lg border-[0.5px] border-stroke bg-white shadow-default dark:border-dark-3 dark:bg-gray-dark`}
                 >
                     <div className="flex items-center gap-2.5 px-5 pb-5.5 pt-3.5">
-                        <span className="relative block h-12 w-12 rounded-full">
-                            <Image
-                                width={112}
-                                height={112}
-                                src="/images/user/user-03.png"
-                                style={{
-                                    width: "auto",
-                                    height: "auto",
-                                }}
-                                alt="User"
-                                className="overflow-hidden rounded-full"
-                            />
-
-                            <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green dark:border-gray-dark"></span>
-                        </span>
-
                         <span className="block">
                             <span className="block font-medium text-dark dark:text-white">
-                                Jhon Smith
+                                {userDetails.name || "User"}
                             </span>
                             <span className="block font-medium text-dark-5 dark:text-dark-6">
-                                jonson@nextadmin.com
+                                {userDetails.email || "user@gmail.com"}
                             </span>
                         </span>
                     </div>
