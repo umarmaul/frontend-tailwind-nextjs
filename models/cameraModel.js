@@ -27,5 +27,6 @@ const cameraSchema = new mongoose.Schema({
     },
 });
 
-export default mongoose.models.cameras ||
-    mongoose.model("cameras", cameraSchema);
+const Camera =
+    mongoose.models.cameras || mongoose.model("cameras", cameraSchema);
+export default Camera;

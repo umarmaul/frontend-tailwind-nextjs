@@ -18,14 +18,11 @@ const DropdownUser = () => {
         const fetchUserDetails = async () => {
             try {
                 const response = await axios.get("/api/users/me");
-                const userId = response.data.data._id;
-                const pictureResponse = await axios.get(
-                    `http://localhost:1122/api/v1/single-user/${userId}`
-                );
+                console.log(response.data);
                 setUserDetails({
                     name: response.data.data.name,
                     email: response.data.data.email,
-                    profile_picture: pictureResponse.data.data.profile_picture,
+                    profile_picture: response.data.data.profile_picture,
                 });
             } catch (error) {
                 console.error("Error fetching user details:", error);
