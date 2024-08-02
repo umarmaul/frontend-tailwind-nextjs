@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import User from "@/models/userModel";
+import Event from "@/models/eventModel";
 
 const reportSchema = new mongoose.Schema({
     report_type: {
@@ -7,17 +9,17 @@ const reportSchema = new mongoose.Schema({
     },
     reporter: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: User,
         default: null,
     },
     reported_to: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: User,
         default: null,
     },
     event: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "events",
+        ref: Event,
         default: null,
     },
     events: {

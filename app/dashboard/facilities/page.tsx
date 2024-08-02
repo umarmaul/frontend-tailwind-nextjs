@@ -15,15 +15,21 @@ export default function Facilities() {
     });
     const [data, setData] = useState([
         {
-            name: "",
-            supervisor: { name: "" },
-            operator: { name: "" },
-            description: "",
+            location: {
+                name: "",
+                supervisor: { name: "" },
+                operator: { name: "" },
+                description: "",
+            },
+            events: {
+                event_picture: "",
+            },
         },
     ]);
 
     const toggleAdd = () => {
         setShowAdd(!showAdd);
+        fetchFacilities();
     };
 
     const addFacility = async () => {
@@ -35,15 +41,16 @@ export default function Facilities() {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            toggleAdd();
         }
     };
 
     const fetchFacilities = async () => {
         try {
             const res = await axios.get("/api/facilities");
-            console.log(res.data);
-            setData(res.data);
-            console.log(data);
+            console.log(res.data.data);
+            setData(res.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -140,11 +147,12 @@ export default function Facilities() {
                             <FacilitiesCard
                                 key={index}
                                 Props={{
-                                    name: facility.name,
-                                    supervisor: facility.supervisor.name,
-                                    operator: facility.operator.name,
-                                    description: facility.description,
-                                    image: "/logo.svg",
+                                    name: facility.location.name,
+                                    supervisor:
+                                        facility.location.supervisor.name,
+                                    operator: facility.location.operator.name,
+                                    description: facility.location.description,
+                                    image: facility.events.event_picture,
                                     camera: "Yes",
                                     iot: "Yes",
                                 }}

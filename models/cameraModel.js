@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Location from "@/models/locationModel";
 
 const cameraSchema = new mongoose.Schema({
     name: {
@@ -19,7 +20,7 @@ const cameraSchema = new mongoose.Schema({
     },
     from_location: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "locations",
+        ref: Location,
         default: null,
     },
     createdAt: {

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "@/models/userModel";
 
 const locationSchema = new mongoose.Schema({
     name: {
@@ -7,12 +8,12 @@ const locationSchema = new mongoose.Schema({
     },
     supervisor: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: User,
         default: null,
     },
     operator: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: User,
         default: null,
     },
     description: {

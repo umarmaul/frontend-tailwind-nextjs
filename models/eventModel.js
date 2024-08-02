@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Camera from "@/models/cameraModel";
 
 const eventSchema = new mongoose.Schema({
     event_level: {
@@ -19,7 +20,7 @@ const eventSchema = new mongoose.Schema({
     },
     from_camera: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "cameras",
+        ref: Camera,
         default: null,
     },
     status: {
