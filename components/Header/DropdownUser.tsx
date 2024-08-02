@@ -18,7 +18,6 @@ const DropdownUser = () => {
         const fetchUserDetails = async () => {
             try {
                 const response = await axios.get("/api/users/me");
-                console.log(response.data);
                 setUserDetails({
                     name: response.data.data.name,
                     email: response.data.data.email,
@@ -61,7 +60,7 @@ const DropdownUser = () => {
                             height: "auto",
                         }}
                         alt="User"
-                        className="overflow-hidden rounded-full"
+                        className="overflow-hidden py-auto rounded-full"
                     />
                 </span>
 

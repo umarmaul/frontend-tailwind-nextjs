@@ -3,15 +3,19 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
+        default: "user",
     },
     username: {
         type: String,
+        default: "user",
     },
     email: {
         type: String,
+        default: "user@example.com",
     },
     password: {
         type: String,
+        default: "user",
     },
     role: {
         type: String,
@@ -19,6 +23,7 @@ const userSchema = new mongoose.Schema({
     },
     profie_picture: {
         type: String,
+        default: "user.png",
     },
     createdAt: {
         type: Date,
@@ -28,14 +33,6 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    isVerified: {
-        type: Boolean,
-        default: false,
-    },
-    forgotPasswordToken: String,
-    forgotPasswordTokenExpiry: Date,
-    verifyToken: String,
-    verifyTokenExpiry: Date,
 });
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);

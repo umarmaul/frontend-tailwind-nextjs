@@ -2,14 +2,18 @@ import { connect } from "@/utils/dbConfig";
 import { NextResponse, NextRequest } from "next/server";
 import Location from "@/models/locationModel";
 import User from "@/models/userModel";
+import Camera from "@/models/cameraModel";
 
 connect();
 
 export async function GET() {
     try {
-        const locations = await Location.find()
-            .populate("supervisor")
-            .populate("operator");
+        const locations = await Location.find({}).populate({
+            path: "operator supervisor",
+            model: User,
+            select: "name",
+        });
+
         return NextResponse.json(locations);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 400 });

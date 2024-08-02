@@ -37,7 +37,7 @@ export default function ProfilePage() {
                     alt=""
                     width={200}
                     height={200}
-                    className="rounded-full mx-auto block my-6 "
+                    className="rounded-full mx-auto block py-3"
                 />
                 <div className="text-center">
                     <h1 className="text-3xl font-bold">{data.name}</h1>

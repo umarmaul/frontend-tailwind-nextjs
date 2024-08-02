@@ -3,17 +3,21 @@ import mongoose from "mongoose";
 const locationSchema = new mongoose.Schema({
     name: {
         type: String,
+        default: "location",
     },
     supervisor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
+        default: null,
     },
     operator: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "users",
+        default: null,
     },
     description: {
         type: String,
+        default: "no description",
     },
     createdAt: {
         type: Date,

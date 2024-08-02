@@ -3,25 +3,27 @@ import mongoose from "mongoose";
 const eventSchema = new mongoose.Schema({
     event_level: {
         type: String,
-        enum: ["low", "mid", "high"],
         default: "low",
     },
     event_type: {
         type: String,
+        default: "event",
     },
     event_picture: {
         type: String,
+        default: "event.png",
     },
     description: {
         type: String,
+        default: "no description",
     },
     from_camera: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "cameras",
+        default: null,
     },
     status: {
         type: String,
-        enum: ["new", "on_progress", "done"],
         default: "new",
     },
     createdAt: {

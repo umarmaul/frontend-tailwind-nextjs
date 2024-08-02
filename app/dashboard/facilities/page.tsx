@@ -38,18 +38,18 @@ export default function Facilities() {
         }
     };
 
-    useEffect(() => {
-        const fetchFacilities = async () => {
-            try {
-                const res = await axios.get("/api/facilities");
-                console.log(res.data);
-                setData(res.data);
-                console.log(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    const fetchFacilities = async () => {
+        try {
+            const res = await axios.get("/api/facilities");
+            console.log(res.data);
+            setData(res.data);
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
+    useEffect(() => {
         fetchFacilities();
     }, []);
 
