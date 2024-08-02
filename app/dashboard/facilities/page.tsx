@@ -16,6 +16,7 @@ export default function Facilities() {
     const [data, setData] = useState([
         {
             location: {
+                _id: "",
                 name: "",
                 supervisor: { name: "" },
                 operator: { name: "" },
@@ -35,7 +36,6 @@ export default function Facilities() {
     const addFacility = async () => {
         try {
             const res = await axios.post("/api/facilities", addData);
-            console.log(res.data);
             if (res.data.success) {
                 alert("Facility added successfully");
             }
@@ -49,7 +49,6 @@ export default function Facilities() {
     const fetchFacilities = async () => {
         try {
             const res = await axios.get("/api/facilities");
-            console.log(res.data.data);
             setData(res.data.data);
         } catch (error) {
             console.log(error);
@@ -73,7 +72,7 @@ export default function Facilities() {
                 <div className="flex flex-col space-y-10 mt-6">
                     {showAdd ? (
                         <div className="flex flex-col items-center justify-center space-y-10">
-                            <div className="flex space-x-16 justify-center items-start">
+                            <div className="flex flex-col md:flex-row md:space-x-16 space-y-6 md:space-y-0 justify-center items-start">
                                 <div className="flex flex-col space-y-4 text-xl">
                                     <label htmlFor="name">Name</label>
                                     <input
@@ -147,6 +146,7 @@ export default function Facilities() {
                             <FacilitiesCard
                                 key={index}
                                 Props={{
+                                    link: facility.location._id,
                                     name: facility.location.name,
                                     supervisor:
                                         facility.location.supervisor.name,
