@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" className="scroll-smooth">
-            <link rel="icon" href="/" />
+            <link rel="icon" href="/dashboard" />
             <body>{children}</body>
         </html>
     );
