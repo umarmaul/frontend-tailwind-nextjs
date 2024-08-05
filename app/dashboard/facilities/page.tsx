@@ -9,8 +9,8 @@ export default function Facilities() {
     const [showAdd, setShowAdd] = useState(false);
     const [addData, setAddData] = useState({
         name: "",
-        supervisor: "",
-        operator: "",
+        supervisor: "66ad0731aba7a239702a3f55",
+        operator: "66ad0731aba7a239702a3f55",
         description: "",
     });
     const [data, setData] = useState([

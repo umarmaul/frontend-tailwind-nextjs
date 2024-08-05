@@ -2,23 +2,27 @@
 
 import Pagination from "@/components/Pagination";
 import { useState, useEffect } from "react";
-import IotCard from "@/components/IotCard";
+import { useParams } from "next/navigation";
+import IotCard from "./IotCard";
 import { IotProps } from "@/types/iot";
 
-export default function LeadingIndicatorList() {
+export default function IotFacilitiesList() {
     const [sensorData, setSensorData] = useState<IotProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<null | string>(null);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
+    const { slug } = useParams();
+    const formattedSlug = Array.isArray(slug) ? slug[0] : slug;
+
     useEffect(() => {
-        const fetchData = async (page: number) => {
+        const fetchData = async (page: number, slug: string) => {
             setLoading(true);
 
             try {
                 const res = await fetch(
-                    `/api/leading-indicator?limit=10&page=${page}`
+                    `/api/iot/${slug}?limit=10&page=${page}`
                 );
                 if (!res.ok) {
                     throw new Error("Network response was not ok");
@@ -32,9 +36,8 @@ export default function LeadingIndicatorList() {
                 setLoading(false);
             }
         };
-
-        fetchData(page);
-    }, [page]);
+        fetchData(page, formattedSlug);
+    }, [page, formattedSlug]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
