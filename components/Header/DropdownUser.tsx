@@ -29,7 +29,7 @@ const DropdownUser = () => {
         };
 
         fetchUserDetails();
-    }, []);
+    }, [Router]);
 
     const logout = async () => {
         try {

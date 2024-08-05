@@ -1,7 +1,11 @@
+import Breadcrumb from "@/components/Breadcrumbs";
+import VisualAnalysisList from "@/components/VisualAnalysisList";
+
 export default function VisualAnalysis() {
     return (
         <div>
-            <h1>Visual Analysis</h1>
+            <Breadcrumb pageName="Visual Analysis" />
+            <VisualAnalysisList />
         </div>
     );
 }

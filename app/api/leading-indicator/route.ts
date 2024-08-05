@@ -1,4 +1,3 @@
-// app/api/dashboard/visual-analysis/[slug]/route.js
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/utils/dbConfig";
 import Sensor from "@/models/sensorModel";

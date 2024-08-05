@@ -1,3 +1,11 @@
-export default function VisualAnalysisDetails({ params: { slug } }: any) {
-    return <h1>Visual Analysis Details</h1>;
+import Breadcrumb from "@/components/Breadcrumbs";
+import CameraFacilitiesList from "@/components/CameraFacilitiesList";
+
+export default function VisualAnalysisDetails() {
+    return (
+        <div className="container mx-auto">
+            <Breadcrumb pageName="Facilities / Details" />
+            <CameraFacilitiesList />
+        </div>
+    );
 }

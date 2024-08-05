@@ -1,10 +1,10 @@
-export type IotProps = {
+export type EventProps = {
     _id: string;
-    name: string;
-    temperature: number;
-    humidity: number;
-    AQI: number;
-    from_location: {
+    event_level: string;
+    event_type: string;
+    event_picture: string;
+    description: string;
+    from_camera: {
         _id: string;
         name: string;
     };

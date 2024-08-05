@@ -3,11 +3,11 @@
 import Pagination from "@/components/Pagination";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import IotCard from "./IotCard";
-import { IotProps } from "@/types/iot";
+import EventCard from "@/components/EventCard";
+import { EventProps } from "@/types/event";
 
-export default function IotFacilitiesList() {
-    const [sensorData, setSensorData] = useState<IotProps[]>([]);
+export default function CameraFacilitiesList() {
+    const [data, setData] = useState<EventProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<null | string>(null);
     const [page, setPage] = useState(1);
@@ -19,16 +19,15 @@ export default function IotFacilitiesList() {
     useEffect(() => {
         const fetchData = async (page: number, slug: string) => {
             setLoading(true);
-
             try {
                 const res = await fetch(
-                    `/api/iot/${slug}?limit=10&page=${page}`
+                    `/api/camera/${slug}?limit=10&page=${page}`
                 );
                 if (!res.ok) {
                     throw new Error("Network response was not ok");
                 }
                 const data = await res.json();
-                setSensorData(data.sensorData);
+                setData(data.eventData);
                 setTotalPages(Math.ceil(data.total / data.limit));
             } catch (error) {
                 setError((error as Error).message);
@@ -39,16 +38,22 @@ export default function IotFacilitiesList() {
         fetchData(page, formattedSlug);
     }, [page, formattedSlug]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
-            {sensorData.map((data) => (
-                <div key={data._id}>
-                    <IotCard data={data} />
+            {data.map((event) => (
+                <div key={event._id}>
+                    <EventCard data={event} />
                 </div>
             ))}
+
             <Pagination
                 page={page}
                 totalPages={totalPages}

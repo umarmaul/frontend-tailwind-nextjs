@@ -41,8 +41,8 @@ export default function LeadingIndicatorList() {
 
     return (
         <div>
-            {sensorData.map((data, index) => (
-                <div key={index}>
+            {sensorData.map((data) => (
+                <div key={data._id}>
                     <IotCard data={data} />
                 </div>
             ))}
