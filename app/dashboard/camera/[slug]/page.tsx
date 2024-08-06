@@ -4,7 +4,7 @@ import CameraFacilitiesList from "@/components/CameraFacilitiesList";
 export default function VisualAnalysisDetails() {
     return (
         <div className="container mx-auto">
-            <Breadcrumb pageName="Facilities / Details" />
+            <Breadcrumb pageName="Facilities / Camera" />
             <CameraFacilitiesList />
         </div>
     );

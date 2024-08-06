@@ -12,7 +12,7 @@ export default function FacilitiesIot({ link }: any) {
                 />
                 <h1 className="text-2xl font-bold capitalize">IoT</h1>
                 <a
-                    href={`/dashboard/leading-indicator/${link}`}
+                    href={`/dashboard/iot/${link}`}
                     className="py-2 px-6 border rounded-lg bg-primary text-white hover:bg-purple-400 active:translate-y-1 shadow-lg duration-150 text-lg font-bold"
                 >
                     View

@@ -12,7 +12,7 @@ export default function FacilitiesCamera({ link }: any) {
                 />
                 <h1 className="text-2xl font-bold capitalize">Camera</h1>
                 <a
-                    href={`/dashboard/visual-analysis/${link}`}
+                    href={`/dashboard/camera/${link}`}
                     className="py-2 px-6 border rounded-lg bg-primary text-white hover:bg-purple-400 active:translate-y-1 shadow-lg duration-150 text-lg font-bold"
                 >
                     View
