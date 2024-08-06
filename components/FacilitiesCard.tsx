@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const FacilitiesCard = ({ Props }: { Props: any }) => {
+export default function FacilitiesCard({ Props }: { Props: any }) {
     return (
         <a
             href={`/dashboard/facilities/${Props.link}`}
@@ -10,8 +10,8 @@ const FacilitiesCard = ({ Props }: { Props: any }) => {
                 <Image
                     src={Props.image}
                     alt=""
-                    width={120}
-                    height={120}
+                    width={200}
+                    height={200}
                     className="rounded-xl"
                 />
             </div>
@@ -37,6 +37,4 @@ const FacilitiesCard = ({ Props }: { Props: any }) => {
             </div>
         </a>
     );
-};
-
-export default FacilitiesCard;
+}

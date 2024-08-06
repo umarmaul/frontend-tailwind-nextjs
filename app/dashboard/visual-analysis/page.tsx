@@ -3,7 +3,7 @@ import VisualAnalysisList from "@/components/VisualAnalysisList";
 
 export default function VisualAnalysis() {
     return (
-        <div>
+        <div className="container mx-auto">
             <Breadcrumb pageName="Visual Analysis" />
             <VisualAnalysisList />
         </div>

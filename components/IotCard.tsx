@@ -7,7 +7,7 @@ export default function IotCard({ data }: { data: IotProps }) {
     const [status, setStatus] = useState(data.status);
 
     const toggleStatus = async () => {
-        const newStatus = status === "active" ? "inactive" : "active";
+        const newStatus = status === "approved" ? "new" : "approved";
         try {
             const response = await fetch("/api/sensor-status", {
                 method: "POST",
@@ -29,8 +29,8 @@ export default function IotCard({ data }: { data: IotProps }) {
     return (
         <>
             <div
-                className={`flex justify-around items-center text-center m-4 rounded-lg p-4 space-x-4 text-sm md:text-lg cursor-pointer transition-colors duration-300 ${
-                    status === "active" ? "bg-green-100" : "bg-red-100"
+                className={`flex justify-around border items-center text-center my-6 rounded-lg p-4 space-x-4 text-sm md:text-lg cursor-pointer transition-colors duration-300 ${
+                    status === "approved" ? "bg-green-100" : "bg-red-100"
                 }`}
                 onClick={() => setIsModalOpen(true)}
             >

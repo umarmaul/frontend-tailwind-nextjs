@@ -10,11 +10,7 @@ export async function POST(req: NextRequest) {
     try {
         const result = await Event.updateOne(
             { _id: id },
-            {
-                $set: {
-                    status: status === "approved" ? "new" : "approved",
-                },
-            }
+            { $set: { status: status === "approved" ? "new" : "approved" } }
         );
 
         if (result.modifiedCount === 0) {

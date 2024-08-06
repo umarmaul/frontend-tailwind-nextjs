@@ -38,7 +38,7 @@ export default function Modal({ onClose, children, isOpen }: ModalProps) {
         >
             <div
                 ref={modalRef}
-                className={`bg-white rounded-lg p-8 transform transition-transform duration-300 ${
+                className={`bg-white rounded-lg p-8 m-8 transform transition-transform duration-300 ${
                     isOpen ? "scale-100" : "scale-95"
                 }`}
             >

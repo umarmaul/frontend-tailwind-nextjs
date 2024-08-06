@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
     try {
         const result = await Sensor.updateOne(
             { _id: id },
-            { $set: { status: status === "active" ? "inactive" : "active" } }
+            { $set: { status: status === "approved" ? "new" : "approved" } }
         );
 
         if (result.modifiedCount === 0) {
