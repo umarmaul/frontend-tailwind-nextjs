@@ -59,7 +59,19 @@ export async function GET() {
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        const newLocation = new Location(reqBody);
+        const { name, description, supervisor, operator } = reqBody;
+
+        // Set default values for supervisor and operator if they are not provided
+        const defaultSupervisor = supervisor || "66ad0731aba7a239702a3f55";
+        const defaultOperator = operator || "66ad0731aba7a239702a3f55";
+
+        const newLocation = new Location({
+            name,
+            description,
+            supervisor: defaultSupervisor,
+            operator: defaultOperator,
+        });
+
         const savedLocation = await newLocation.save();
 
         return NextResponse.json({

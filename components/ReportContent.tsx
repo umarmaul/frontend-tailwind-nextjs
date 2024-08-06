@@ -1,3 +1,5 @@
+// SELANJUTNYA INI HARUS DISELESAIKAN
+
 import { IotProps } from "@/types/iot";
 import Table from "@/components/Table";
 import Image from "next/image";
@@ -51,8 +53,8 @@ export default function ReportContent({ data, tableData }: ReportContentProps) {
                     <Image
                         src={data.signature}
                         alt="Tanda Tangan"
-                        width={300}
-                        height={300}
+                        width={100}
+                        height={100}
                         className="border border-gray-300 rounded-md"
                     />
                 )}

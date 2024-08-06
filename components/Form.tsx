@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import SignatureCanvas from "react-signature-canvas";
-import ReportContent, { ReportData } from "./ReportContent";
+import ReportContent, { ReportData } from "@/components/ReportContent";
 import { IotProps } from "@/types/iot";
 
 export default function Form() {
@@ -131,8 +131,8 @@ export default function Form() {
                             penColor="black"
                             ref={sigCanvas}
                             canvasProps={{
-                                width: 500,
-                                height: 200,
+                                width: 100,
+                                height: 100,
                                 className:
                                     "border-2 border-gray-300 rounded-md",
                             }}

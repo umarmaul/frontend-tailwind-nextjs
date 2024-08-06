@@ -9,8 +9,8 @@ export default function Facilities() {
     const [showAdd, setShowAdd] = useState(false);
     const [addData, setAddData] = useState({
         name: "",
-        supervisor: "66ad0731aba7a239702a3f55",
-        operator: "66ad0731aba7a239702a3f55",
+        supervisor: "",
+        operator: "",
         description: "",
     });
     const [data, setData] = useState([
@@ -27,6 +27,9 @@ export default function Facilities() {
             },
         },
     ]);
+
+    const placeholderImage =
+        "http://194.238.16.213:1122/event/event_picture_1722880509456.png";
 
     const toggleAdd = () => {
         setShowAdd(!showAdd);
@@ -152,7 +155,9 @@ export default function Facilities() {
                                         facility.location.supervisor.name,
                                     operator: facility.location.operator.name,
                                     description: facility.location.description,
-                                    image: facility.events.event_picture,
+                                    image:
+                                        facility.events?.event_picture ||
+                                        placeholderImage,
                                     camera: "Yes",
                                     iot: "Yes",
                                 }}

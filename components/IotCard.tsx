@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IotProps } from "@/types/iot";
+import { User } from "@/types/User";
 import Modal from "@/components/Modal";
 
 export default function IotCard({ data }: { data: IotProps }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [status, setStatus] = useState(data.status);
+    const [users, setUsers] = useState<User[]>([]);
+    const [selectedUser, setSelectedUser] = useState<string>("");
+    const [description, setDescription] = useState<string>("");
+
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch("/api/all-user");
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            console.error("Failed to fetch users:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (isModalOpen) {
+            fetchUsers();
+        }
+    }, [isModalOpen]);
 
     const toggleStatus = async () => {
         const newStatus = status === "approved" ? "new" : "approved";
@@ -23,6 +43,28 @@ export default function IotCard({ data }: { data: IotProps }) {
             }
         } catch (error) {
             console.error("Error updating status:", error);
+        }
+    };
+
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch("/api/tasks", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    task: data._id,
+                    description,
+                    user: selectedUser,
+                }),
+            });
+        } catch (error) {
+            console.error("Error updating status:", error);
+        } finally {
+            setIsModalOpen(false);
+            setDescription("");
+            setSelectedUser("");
         }
     };
 
@@ -61,6 +103,35 @@ export default function IotCard({ data }: { data: IotProps }) {
                     <p>Status: {status}</p>
                     <p>ID: {data._id}</p>
                     <p>Created At: {data.createdAt.toString()}</p>
+                    <div className="mt-4">
+                        <label className="block mb-2">Assigned to:</label>
+                        <select
+                            value={selectedUser}
+                            onChange={(e) => setSelectedUser(e.target.value)}
+                            className="border p-2 rounded w-full"
+                        >
+                            <option value="">Select a user</option>
+                            {users.map((user) => (
+                                <option key={user._id} value={user._id}>
+                                    {user.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="mt-4">
+                        <label className="block mb-2">Description:</label>
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            className="border p-2 rounded w-full"
+                        ></textarea>
+                    </div>
+                    <button
+                        onClick={handleSubmit}
+                        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
+                    >
+                        Submit Task
+                    </button>
                     <button
                         onClick={toggleStatus}
                         className="mt-4 bg-blue-500 text-white rounded p-2"
