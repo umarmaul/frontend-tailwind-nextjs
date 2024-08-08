@@ -17,7 +17,7 @@ const taskSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: "new",
+        default: "to do",
     },
     createdAt: {
         type: Date,

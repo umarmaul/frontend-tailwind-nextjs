@@ -3,6 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 import Location from "@/models/locationModel";
 import Event from "@/models/eventModel";
 import Camera from "@/models/cameraModel";
+import Sensor from "@/models/sensorModel";
 
 connect();
 
@@ -26,9 +27,16 @@ export async function GET() {
                 },
                 "_id"
             );
+            const totalSensors = await Sensor.countDocuments({
+                from_location: location._doc._id.toString(),
+                status: "new",
+            });
 
-            // Initialize an array to hold events for this location
-            const locationEvents = [];
+            let locationEvents = {};
+            let totalDevices = {
+                sensor: totalSensors,
+                camera: 0,
+            };
 
             // Iterate through each camera
             for (const camera of cameras) {
@@ -38,14 +46,22 @@ export async function GET() {
                     "event_picture"
                 );
 
+                const totalEvents = await Event.countDocuments({
+                    from_camera: camera._doc._id.toString(),
+                    status: "new",
+                });
+
+                totalDevices.camera = totalEvents;
+
                 // Add events to the locationEvents array
-                locationEvents.push(...events);
+                locationEvents = events[0];
             }
 
             // Add the location and its events to the result
             result.push({
                 location: location,
-                events: locationEvents[0],
+                events: locationEvents,
+                totalDevices,
             });
         }
 
@@ -62,8 +78,8 @@ export async function POST(request: NextRequest) {
         const { name, description, supervisor, operator } = reqBody;
 
         // Set default values for supervisor and operator if they are not provided
-        const defaultSupervisor = supervisor || "66ad0731aba7a239702a3f55";
-        const defaultOperator = operator || "66ad0731aba7a239702a3f55";
+        const defaultSupervisor = supervisor || "66b398bc2f0cb789dd6bd0a8";
+        const defaultOperator = operator || "66b398bc2f0cb789dd6bd0a8";
 
         const newLocation = new Location({
             name,

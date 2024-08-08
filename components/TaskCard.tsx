@@ -33,7 +33,11 @@ export default function TaskCard({ data }: { data: TaskProps }) {
         <>
             <div
                 className={`flex justify-around border items-center text-center my-6 rounded-lg p-4 space-x-4 text-sm md:text-lg cursor-pointer transition-colors duration-300 ${
-                    status === "approved" ? "bg-green-100" : "bg-red-100"
+                    status === "in approval"
+                        ? "bg-green-50"
+                        : status === "in progress"
+                        ? "bg-yellow-50"
+                        : "bg-red-50"
                 }`}
                 onClick={() => setIsModalOpen(true)}
             >

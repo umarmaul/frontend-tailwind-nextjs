@@ -4,13 +4,15 @@ import Breadcrumb from "@/components/Breadcrumbs";
 import FacilitiesCard from "@/components/FacilitiesCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { UserProps } from "@/types/user";
 
 export default function Facilities() {
     const [showAdd, setShowAdd] = useState(false);
+    const [users, setUsers] = useState<UserProps[]>([]);
+    const [selectedSupervisor, setSelectedSupervisor] = useState<string>("");
+    const [selectedOperator, setSelectedOperator] = useState<string>("");
     const [addData, setAddData] = useState({
         name: "",
-        supervisor: "",
-        operator: "",
         description: "",
     });
     const [data, setData] = useState([
@@ -25,21 +27,53 @@ export default function Facilities() {
             events: {
                 event_picture: "",
             },
+            totalDevices: {
+                sensor: 0,
+                camera: 0,
+            },
         },
     ]);
 
     const placeholderImage =
-        "http://194.238.16.213:1122/event/event_picture_1722880509456.png";
+        "http://194.238.16.213:1122/event/event_picture_1723046992164.png";
+
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch("/api/all-user");
+            const data = await response.json();
+            setUsers(data);
+        } catch (error) {
+            console.error("Failed to fetch users:", error);
+        }
+    };
 
     const toggleAdd = () => {
         setShowAdd(!showAdd);
         fetchFacilities();
+        fetchUsers();
+        setSelectedSupervisor("");
+        setSelectedOperator("");
+        setAddData({
+            name: "",
+            description: "",
+        });
     };
 
     const addFacility = async () => {
         try {
-            const res = await axios.post("/api/facilities", addData);
-            if (res.data.success) {
+            const res = await fetch("/api/facilities", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: addData.name,
+                    supervisor: selectedSupervisor,
+                    operator: selectedOperator,
+                    description: addData.description,
+                }),
+            });
+            if (res.ok) {
                 alert("Facility added successfully");
             }
         } catch (error) {
@@ -90,36 +124,54 @@ export default function Facilities() {
                                             });
                                         }}
                                     />
-                                    <label htmlFor="supervisor">
+                                    <label className="block mb-2">
                                         Supervisor
                                     </label>
-                                    <input
-                                        type="text"
-                                        id="supervisor"
-                                        placeholder="supervisor_id"
-                                        className="p-1 border-2 rounded-lg"
-                                        onChange={(e) => {
-                                            setAddData({
-                                                ...addData,
-                                                supervisor: e.target.value,
-                                            });
-                                        }}
-                                    />
+                                    <select
+                                        value={selectedSupervisor}
+                                        onChange={(e) =>
+                                            setSelectedSupervisor(
+                                                e.target.value
+                                            )
+                                        }
+                                        className="border p-2 rounded-lg w-full"
+                                    >
+                                        <option value="">
+                                            Select a supervisor
+                                        </option>
+                                        {users.map((user) => (
+                                            <option
+                                                key={user._id}
+                                                value={user._id}
+                                            >
+                                                {user.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="flex flex-col space-y-4 text-xl">
-                                    <label htmlFor="operator">Operator</label>
-                                    <input
-                                        type="text"
-                                        id="operator"
-                                        placeholder="operator_id"
-                                        className="p-1 border-2 rounded-lg"
-                                        onChange={(e) => {
-                                            setAddData({
-                                                ...addData,
-                                                operator: e.target.value,
-                                            });
-                                        }}
-                                    />
+                                    <label className="block mb-2">
+                                        Operator
+                                    </label>
+                                    <select
+                                        value={selectedOperator}
+                                        onChange={(e) =>
+                                            setSelectedOperator(e.target.value)
+                                        }
+                                        className="border p-2 rounded-lg w-full"
+                                    >
+                                        <option value="">
+                                            Select a operator
+                                        </option>
+                                        {users.map((user) => (
+                                            <option
+                                                key={user._id}
+                                                value={user._id}
+                                            >
+                                                {user.name}
+                                            </option>
+                                        ))}
+                                    </select>
                                     <label htmlFor="description">
                                         Description
                                     </label>
@@ -158,8 +210,8 @@ export default function Facilities() {
                                     image:
                                         facility.events?.event_picture ||
                                         placeholderImage,
-                                    camera: "Yes",
-                                    iot: "Yes",
+                                    camera: facility.totalDevices.camera,
+                                    iot: facility.totalDevices.sensor,
                                 }}
                             />
                         ))

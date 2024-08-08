@@ -30,7 +30,7 @@ export default function Table({ data }: TableProps) {
                         <td className="py-2 border">{item.humidity}</td>
                         <td className="py-2 border">{item.AQI}</td>
                         <td className="py-2 border">
-                            {item.from_location.name}
+                            {item.from_location?.name}
                         </td>
                         <td className="py-2 border">{item.status}</td>
                         <td className="py-2 border">

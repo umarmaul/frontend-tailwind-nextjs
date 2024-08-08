@@ -28,7 +28,7 @@ export default function FacilitiesCard({ Props }: { Props: any }) {
                     <p>{Props.description}</p>
                 </div>
                 <div className="w-1/4 space-y-2 md:text-xl text-sm hidden md:block">
-                    <h1 className="font-bold">Devices</h1>
+                    <h1 className="font-bold">Alerts</h1>
                     <div>
                         <p>Camera: {Props.camera}</p>
                         <p>IoT: {Props.iot}</p>

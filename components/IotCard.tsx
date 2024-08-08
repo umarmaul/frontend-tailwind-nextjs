@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { IotProps } from "@/types/iot";
 import { UserProps } from "@/types/user";
 import Modal from "@/components/Modal";
+import { useRouter } from "next/navigation";
 
 export default function IotCard({ data }: { data: IotProps }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -9,6 +10,7 @@ export default function IotCard({ data }: { data: IotProps }) {
     const [users, setUsers] = useState<UserProps[]>([]);
     const [selectedUser, setSelectedUser] = useState<string>("");
     const [description, setDescription] = useState<string>("");
+    const router = useRouter();
 
     const fetchUsers = async () => {
         try {
@@ -59,8 +61,14 @@ export default function IotCard({ data }: { data: IotProps }) {
                     user: selectedUser,
                 }),
             });
+
+            if (response.ok) {
+                router.push("/dashboard/task-management");
+            } else {
+                console.error("Failed to submit task");
+            }
         } catch (error) {
-            console.error("Error updating status:", error);
+            console.error("Error submitting task:", error);
         } finally {
             setIsModalOpen(false);
             setDescription("");
@@ -71,32 +79,48 @@ export default function IotCard({ data }: { data: IotProps }) {
     return (
         <>
             <div
-                className={`flex justify-around border items-center text-center my-6 rounded-lg p-4 space-x-4 text-sm md:text-lg cursor-pointer transition-colors duration-300 ${
-                    status === "approved" ? "bg-green-100" : "bg-red-100"
+                className={`flex flex-col justify-center border items-start my-6 rounded-lg p-4 space-x-4 text-sm md:text-lg cursor-pointer transition-colors duration-300 ${
+                    status === "approved" ? "bg-green-50" : "bg-red-50"
                 }`}
                 onClick={() => setIsModalOpen(true)}
             >
-                <div className="flex flex-col">
-                    <p>Name: {data.name}</p>
-                    <p>From Location: {data.from_location.name}</p>
+                <div className="flex justify-between w-full px-4 items-center">
+                    <p className="text-md font-medium text-lg md:text-2xl">
+                        {data.name}
+                    </p>
+                    <p className="text-md border border-black p-1 rounded-lg bg-slate-100">
+                        {data.from_location?.name}
+                    </p>
                 </div>
-                <div className="flex flex-col">
-                    <p>Temperature: {data.temperature}</p>
-                    <p>Humidity: {data.humidity}</p>
-                </div>
-                <div className="flex flex-col">
-                    <p>AQi: {data.AQI}</p>
-                    <p>Status: {status}</p>
-                </div>
-                <div className="md:flex flex-col hidden">
-                    <p>ID: {data._id}</p>
-                    <p>Created At: {data.createdAt.toString()}</p>
+                <div className="flex justify-between w-full">
+                    <div className="flex flex-col w-full mt-2">
+                        <p className="font-light text-xs md:text-sm my-2">
+                            {data._id}
+                        </p>
+                        <p>Temperature: {data.temperature}</p>
+                        <p>Humidity: {data.humidity}</p>
+                        <p>AQi: {data.AQI}</p>
+                    </div>
+                    <div className="flex flex-col w-full pr-8 mt-10">
+                        <p>Status: {status}</p>
+                        <p className="font-bold">
+                            {status === "approved"
+                                ? "Approved"
+                                : "Waiting for assignment"}
+                        </p>
+                        <p>
+                            Date: {data.createdAt.toString().substring(0, 10)}
+                        </p>
+                        <p>
+                            Time: {data.createdAt.toString().substring(11, 19)}
+                        </p>
+                    </div>
                 </div>
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className="flex flex-col">
                     <p>Name: {data.name}</p>
-                    <p>From Location: {data.from_location.name}</p>
+                    <p>From Location: {data.from_location?.name}</p>
                     <p>Temperature: {data.temperature}</p>
                     <p>Humidity: {data.humidity}</p>
                     <p>AQi: {data.AQI}</p>
