@@ -1,7 +1,11 @@
+import Breadcrumb from "@/components/Breadcrumbs";
+import TaskManagementList from "@/components/TaskManagementList";
+
 export default function TaskManagement() {
     return (
-        <div>
-            <h1>Task Management</h1>
+        <div className="container mx-auto">
+            <Breadcrumb pageName="Task Management" />
+            <TaskManagementList />
         </div>
     );
 }

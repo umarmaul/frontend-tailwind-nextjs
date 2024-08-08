@@ -12,7 +12,7 @@ const eventSchema = new mongoose.Schema({
     },
     event_picture: {
         type: String,
-        default: "event.png",
+        default: "no picture",
     },
     description: {
         type: String,

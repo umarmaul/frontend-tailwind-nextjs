@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { IotProps } from "@/types/iot";
-import { User } from "@/types/User";
+import { UserProps } from "@/types/user";
 import Modal from "@/components/Modal";
 
 export default function IotCard({ data }: { data: IotProps }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [status, setStatus] = useState(data.status);
-    const [users, setUsers] = useState<User[]>([]);
+    const [users, setUsers] = useState<UserProps[]>([]);
     const [selectedUser, setSelectedUser] = useState<string>("");
     const [description, setDescription] = useState<string>("");
 

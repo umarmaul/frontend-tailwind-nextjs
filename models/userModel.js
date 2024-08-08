@@ -21,9 +21,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "user",
     },
-    profie_picture: {
+    profile_picture: {
         type: String,
-        default: "user.png",
+        default: "no picture",
     },
     createdAt: {
         type: Date,

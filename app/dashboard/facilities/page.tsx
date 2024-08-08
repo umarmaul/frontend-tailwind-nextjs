@@ -149,12 +149,12 @@ export default function Facilities() {
                             <FacilitiesCard
                                 key={index}
                                 Props={{
-                                    link: facility.location._id,
-                                    name: facility.location.name,
+                                    link: facility.location?._id,
+                                    name: facility.location?.name,
                                     supervisor:
-                                        facility.location.supervisor.name,
-                                    operator: facility.location.operator.name,
-                                    description: facility.location.description,
+                                        facility.location?.supervisor.name,
+                                    operator: facility.location?.operator.name,
+                                    description: facility.location?.description,
                                     image:
                                         facility.events?.event_picture ||
                                         placeholderImage,

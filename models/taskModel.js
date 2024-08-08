@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 import User from "@/models/userModel";
-import Event from "@/models/eventModel";
-import Sensor from "@/models/sensorModel";
 
 const taskSchema = new mongoose.Schema({
     user: {
@@ -11,7 +9,6 @@ const taskSchema = new mongoose.Schema({
     },
     task: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Event || Sensor,
         default: null,
     },
     description: {
