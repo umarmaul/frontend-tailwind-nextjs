@@ -2,7 +2,6 @@
 
 import Breadcrumb from "@/components/Breadcrumbs";
 import FacilitiesCard from "@/components/FacilitiesCard";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { UserProps } from "@/types/user";
 
@@ -85,8 +84,9 @@ export default function Facilities() {
 
     const fetchFacilities = async () => {
         try {
-            const res = await axios.get("/api/facilities");
-            setData(res.data.data);
+            const res = await fetch("/api/facilities");
+            const data = await res.json();
+            setData(data.data);
         } catch (error) {
             console.log(error);
         }
@@ -104,7 +104,7 @@ export default function Facilities() {
                     onClick={toggleAdd}
                     className="bg-primary text-white px-8 py-2 rounded-full text-center hover:bg-white hover:text-primary active:translate-y-1 shadow-xl"
                 >
-                    Add Facility
+                    Add Device
                 </button>
                 <div className="flex flex-col space-y-10 mt-6">
                     {showAdd ? (

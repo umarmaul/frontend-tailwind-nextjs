@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { IotProps } from "@/types/iot";
 import { UserProps } from "@/types/user";
 import Modal from "@/components/Modal";
-import { useRouter } from "next/navigation";
 
 export default function IotCard({ data }: { data: IotProps }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -10,7 +9,6 @@ export default function IotCard({ data }: { data: IotProps }) {
     const [users, setUsers] = useState<UserProps[]>([]);
     const [selectedUser, setSelectedUser] = useState<string>("");
     const [description, setDescription] = useState<string>("");
-    const router = useRouter();
 
     const fetchUsers = async () => {
         try {
@@ -61,12 +59,6 @@ export default function IotCard({ data }: { data: IotProps }) {
                     user: selectedUser,
                 }),
             });
-
-            if (response.ok) {
-                router.push("/dashboard/task-management");
-            } else {
-                console.error("Failed to submit task");
-            }
         } catch (error) {
             console.error("Error submitting task:", error);
         } finally {
@@ -79,7 +71,7 @@ export default function IotCard({ data }: { data: IotProps }) {
     return (
         <>
             <div
-                className={`flex flex-col justify-center border items-start my-6 rounded-lg p-4 space-x-4 text-sm md:text-lg cursor-pointer transition-colors duration-300 ${
+                className={`flex flex-col justify-center border items-start my-6 rounded-lg p-4 space-x-4 text-sm md:text-lg cursor-pointer transition-colors duration-300 shadow-lg ${
                     status === "approved" ? "bg-green-50" : "bg-red-50"
                 }`}
                 onClick={() => setIsModalOpen(true)}

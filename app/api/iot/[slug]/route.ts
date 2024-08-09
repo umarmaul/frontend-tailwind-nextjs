@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/utils/dbConfig";
 import Sensor from "@/models/sensorModel";
-import Device from "@/models/deviceModel";
 
 connect();
 
@@ -13,24 +12,43 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
-    const skip = (page - 1) * limit;
 
     try {
-        const iots = await Device.find({
-            from_location: slug,
-            type: "iot",
-        }).select("_id");
-        const iotIds = iots.map((iot) => iot._id);
+        const statuses = ["new", "approved"];
+        const result = [];
+        const total = [];
 
-        const sensorData = await Sensor.find({ from_device: { $in: iotIds } })
-            .skip(skip)
-            .limit(limit)
-            .populate("from_device", "name");
+        for (const status of statuses) {
+            const skip = (page - 1) * limit;
 
-        const total = await Sensor.countDocuments({
-            from_device: { $in: iotIds },
+            const sensorData = await Sensor.find({ status, from_device: slug })
+                .sort({ createdAt: "descending" })
+                .skip(skip)
+                .limit(limit)
+                .populate({
+                    path: "from_device",
+                    select: "name",
+                    populate: {
+                        path: "from_location",
+                        select: "name",
+                    },
+                });
+
+            const totalData = await Sensor.countDocuments({
+                status,
+                from_device: slug,
+            });
+
+            result.push(...sensorData);
+            total.push(totalData);
+        }
+
+        return NextResponse.json({
+            sensorData: result,
+            total: Math.max(...total),
+            page,
+            limit,
         });
-        return NextResponse.json({ sensorData, total, page, limit });
     } catch (error) {
         return NextResponse.json(
             { error: "Failed to fetch sensor data" },

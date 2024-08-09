@@ -7,11 +7,12 @@ import IotCard from "./IotCard";
 import { IotProps } from "@/types/iot";
 
 export default function IotFacilitiesList() {
-    const [sensorData, setSensorData] = useState<IotProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<null | string>(null);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const statuses = ["new", "approved"];
+    const [iotPages, setIotPages] = useState<{ [key: string]: IotProps[] }>({});
 
     const { slug } = useParams();
     const formattedSlug = Array.isArray(slug) ? slug[0] : slug;
@@ -28,10 +29,20 @@ export default function IotFacilitiesList() {
                     throw new Error("Network response was not ok");
                 }
                 const data = await res.json();
-                setSensorData(data.sensorData);
+                const groupedIots: { [key: string]: IotProps[] } = {
+                    new: data.sensorData.filter(
+                        (iot: IotProps) => iot.status === "new"
+                    ),
+                    approved: data.sensorData.filter(
+                        (iot: IotProps) => iot.status === "approved"
+                    ),
+                };
+                setIotPages(groupedIots);
                 setTotalPages(Math.ceil(data.total / data.limit));
             } catch (error) {
-                setError((error as Error).message);
+                if (error instanceof Error) {
+                    setError(error.message);
+                }
             } finally {
                 setLoading(false);
             }
@@ -44,15 +55,22 @@ export default function IotFacilitiesList() {
 
     return (
         <div>
-            {sensorData.map((data) => (
-                <div key={data._id}>
-                    <IotCard data={data} />
-                </div>
-            ))}
+            <div className="flex space-x-4 overflow-auto focus:outline-none">
+                {statuses.map((status) => (
+                    <div key={status} className="flex-1">
+                        <h2 className="text-lg font-bold mb-2">{status}</h2>
+                        {iotPages[status]?.map((task) => (
+                            <div key={task._id}>
+                                <IotCard data={task} />
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
             <Pagination
                 page={page}
                 totalPages={totalPages}
-                onPageChange={(page) => setPage(page)}
+                onPageChange={(newPage) => setPage(newPage)}
             />
         </div>
     );
