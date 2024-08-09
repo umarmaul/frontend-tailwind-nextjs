@@ -100,6 +100,7 @@ export default function IotCard({ data }: { data: IotProps }) {
                         <p>Temperature: {data.temperature}</p>
                         <p>Humidity: {data.humidity}</p>
                         <p>AQi: {data.AQI}</p>
+                        <p>Human Presence: {data.human_presence.toString()}</p>
                     </div>
                     <div className="flex flex-col w-full pr-8 mt-10">
                         <p>Status: {status}</p>
@@ -124,6 +125,7 @@ export default function IotCard({ data }: { data: IotProps }) {
                     <p>Temperature: {data.temperature}</p>
                     <p>Humidity: {data.humidity}</p>
                     <p>AQi: {data.AQI}</p>
+                    <p>Human Presence: {data.human_presence.toString()}</p>
                     <p>Status: {status}</p>
                     <p>ID: {data._id}</p>
                     <p>
