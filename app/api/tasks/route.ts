@@ -10,10 +10,17 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     try {
         await Task.create(data);
-        await Sensor.updateOne(
-            { _id: data.task },
-            { $set: { status: "to do" } }
-        );
+        if (data.type === "iot") {
+            await Sensor.updateOne(
+                { _id: data.task },
+                { $set: { status: "to do" } }
+            );
+        } else {
+            await Event.updateOne(
+                { _id: data.task },
+                { $set: { status: "to do" } }
+            );
+        }
         return NextResponse.json(
             { message: "Task created successfully" },
             { status: 200 }
@@ -49,16 +56,22 @@ export async function GET(req: NextRequest) {
 
             for (const populate of taskDatas) {
                 let task_data;
-                task_data = await Event.findById(populate.task).populate(
-                    "from_device",
-                    "name"
-                );
+                task_data = await Event.findById(populate.task).populate({
+                    path: "from_device",
+                    populate: {
+                        path: "from_location",
+                        select: "name",
+                    },
+                });
 
                 if (task_data === null) {
-                    task_data = await Sensor.findById(populate.task).populate(
-                        "from_device",
-                        "name"
-                    );
+                    task_data = await Sensor.findById(populate.task).populate({
+                        path: "from_device",
+                        populate: {
+                            path: "from_location",
+                            select: "name",
+                        },
+                    });
                 }
 
                 populate._doc.task = task_data;

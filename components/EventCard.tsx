@@ -28,17 +28,19 @@ export default function EventCard({ data }: { data: EventProps }) {
     }, [isModalOpen]);
 
     const toggleStatus = async () => {
-        const newStatus = status === "approved" ? "new" : "approved";
+        const newStatus = status === "new" ? "approved" : "new";
         try {
             const response = await fetch("/api/event-status", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ id: data._id, status }),
+                body: JSON.stringify({ id: data._id, status: newStatus }),
             });
             if (response.ok) {
                 setStatus(newStatus);
+                setIsModalOpen(false);
+                alert("Status updated successfully");
             } else {
                 console.error("Failed to update status");
             }
@@ -58,6 +60,7 @@ export default function EventCard({ data }: { data: EventProps }) {
                     task: data._id,
                     description,
                     user: selectedUser,
+                    type: "camera",
                 }),
             });
         } catch (error) {
@@ -66,6 +69,7 @@ export default function EventCard({ data }: { data: EventProps }) {
             setIsModalOpen(false);
             setDescription("");
             setSelectedUser("");
+            alert("Task added successfully");
         }
     };
 
@@ -172,9 +176,9 @@ export default function EventCard({ data }: { data: EventProps }) {
                         </button>
                         <button
                             onClick={toggleStatus}
-                            className="mt-4 bg-primary text-white rounded p-2"
+                            className="mt-4 bg-red-500 text-white rounded p-2 uppercase"
                         >
-                            Toggle Status
+                            anomali
                         </button>
                     </div>
                 </div>

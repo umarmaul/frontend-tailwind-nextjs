@@ -9,6 +9,7 @@ export type DeviceProps = {
     specification: string;
     type: string;
     ip_address: string;
+    totalAlerts?: number;
     createdAt: Date;
     updatedAt: Date;
     __v: number;

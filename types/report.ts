@@ -11,12 +11,16 @@ export type ReportProps = {
         name: string;
         email: string;
     };
-    event?: {
+    task: {
         _id: string;
-        event_level: string;
-        event_type: string;
-        event_picture: string;
-        description: string;
+        event_level?: string;
+        event_type?: string;
+        event_picture?: string;
+        description?: string;
+        temperature?: number;
+        humidity?: number;
+        human_presence?: boolean;
+        AQI?: number;
         from_device: {
             _id: string;
             name: string;
@@ -30,27 +34,8 @@ export type ReportProps = {
         updatedAt: Date;
         __v: number;
     };
-    sensor?: {
-        _id: string;
-        temperature: number;
-        humidity: number;
-        human_presence: boolean;
-        AQI: number;
-        from_device: {
-            _id: string;
-            name: string;
-            from_location: {
-                _id: string;
-                name: string;
-            };
-        };
-        status: string;
-        createdAt: Date;
-        updatedAt: Date;
-        __v: number;
-    };
+    report_details: string;
     status: string;
-    report_file: string;
     createdAt: Date;
     updatedAt: Date;
     __v: number;

@@ -30,6 +30,7 @@ export type TaskProps = {
         updatedAt: Date;
         __v: number;
     };
+    description: string;
     status: string;
     createdAt: Date;
     updatedAt: Date;

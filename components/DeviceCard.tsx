@@ -36,6 +36,7 @@ export default function DeviceCard({ data }: { data: DeviceProps }) {
                         Time Created:{" "}
                         {data.createdAt.toString().substring(11, 19)}
                     </p>
+                    <p>Alerts: {data.totalAlerts}</p>
                 </div>
             </div>
         </a>

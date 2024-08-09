@@ -23,16 +23,6 @@ export default function IotList() {
         type: "iot",
     });
 
-    const fetchLocations = async () => {
-        try {
-            const res = await fetch("/api/all-location");
-            const data = await res.json();
-            setLocations(data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     useEffect(() => {
         const fetchLocations = async () => {
             try {
@@ -89,7 +79,6 @@ export default function IotList() {
             specification: "",
             type: "iot",
         });
-        fetchLocations();
     };
 
     return (

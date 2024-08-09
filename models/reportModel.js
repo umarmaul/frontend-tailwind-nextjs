@@ -1,12 +1,10 @@
 import mongoose from "mongoose";
 import User from "@/models/userModel";
-import Event from "@/models/eventModel";
-import Sensor from "@/models/sensorModel";
 
 const reportSchema = new mongoose.Schema({
     report_type: {
         type: String,
-        default: "report",
+        default: "report type",
     },
     reporter: {
         type: mongoose.Schema.Types.ObjectId,
@@ -18,23 +16,17 @@ const reportSchema = new mongoose.Schema({
         ref: User,
         default: "66b398bc2f0cb789dd6bd0a8",
     },
-    event: {
+    task: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Event,
         default: null,
     },
-    sensor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: Sensor,
-        default: null,
+    report_details: {
+        type: String,
+        default: "no description",
     },
     status: {
         type: String,
-        default: "new",
-    },
-    report_file: {
-        type: String,
-        default: "none",
+        default: "in approval",
     },
     createdAt: {
         type: Date,
