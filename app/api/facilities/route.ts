@@ -2,7 +2,7 @@ import { connect } from "@/utils/dbConfig";
 import { NextResponse, NextRequest } from "next/server";
 import Location from "@/models/locationModel";
 import Event from "@/models/eventModel";
-import Camera from "@/models/cameraModel";
+import Device from "@/models/deviceModel";
 import Sensor from "@/models/sensorModel";
 
 connect();
@@ -19,42 +19,54 @@ export async function GET() {
 
         // Iterate through each location
         for (const location of locations) {
-            // Find cameras for the current location
-
-            const cameras = await Camera.find(
+            const cameras = await Device.find(
                 {
                     from_location: location._doc._id.toString(),
+                    type: "camera",
                 },
                 "_id"
             );
-            const totalSensors = await Sensor.countDocuments({
-                from_location: location._doc._id.toString(),
-                status: "new",
-            });
+            const sensors = await Device.find(
+                {
+                    from_location: location._doc._id.toString(),
+                    type: "iot",
+                },
+                "_id"
+            );
 
             let locationEvents = {};
             let totalDevices = {
-                sensor: totalSensors,
+                sensor: 0,
                 camera: 0,
             };
 
             // Iterate through each camera
             for (const camera of cameras) {
                 // Find events for the current camera
-                const events = await Event.find(
-                    { from_camera: camera._doc._id.toString() },
+                const events = await Event.findOne(
+                    { from_device: camera._doc._id.toString() },
                     "event_picture"
                 );
 
                 const totalEvents = await Event.countDocuments({
-                    from_camera: camera._doc._id.toString(),
+                    from_device: camera._doc._id.toString(),
                     status: "new",
                 });
 
-                totalDevices.camera = totalEvents;
+                totalDevices.camera += totalEvents;
 
-                // Add events to the locationEvents array
-                locationEvents = events[0];
+                // Add events to the locationEvents object (this assumes only one event per camera is needed)
+                locationEvents = events;
+            }
+
+            // Iterate through each sensor
+            for (const sensor of sensors) {
+                const totalSensors = await Sensor.countDocuments({
+                    from_device: sensor._doc._id.toString(),
+                    status: "new",
+                });
+
+                totalDevices.sensor += totalSensors;
             }
 
             // Add the location and its events to the result
@@ -65,7 +77,6 @@ export async function GET() {
             });
         }
 
-        // Return the result as JSON
         return NextResponse.json({ data: result });
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 400 });

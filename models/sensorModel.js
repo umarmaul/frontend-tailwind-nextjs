@@ -1,11 +1,7 @@
 import mongoose from "mongoose";
-import Location from "@/models/locationModel";
+import Device from "@/models/deviceModel";
 
 const sensorSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        default: "sensor",
-    },
     temperature: {
         type: Number,
         default: 0,
@@ -22,14 +18,14 @@ const sensorSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    from_location: {
+    from_device: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: Location,
-        default: null,
+        ref: Device,
+        default: "66ad14cd8344ce01638f7b4a",
     },
     status: {
         type: String,
-        default: "active",
+        default: "new",
     },
     createdAt: {
         type: Date,

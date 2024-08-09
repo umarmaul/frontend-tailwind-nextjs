@@ -13,18 +13,17 @@ export type TaskProps = {
         event_type?: string;
         event_picture?: string;
         description?: string;
-        from_camera?: {
-            _id?: string;
-            name?: string;
-        };
-        name?: string;
         temperature?: number;
         humidity?: number;
         human_presence?: boolean;
         AQI?: number;
-        from_location?: {
-            _id?: string;
-            name?: string;
+        from_device: {
+            _id: string;
+            name: string;
+            from_location: {
+                _id: string;
+                name: string;
+            };
         };
         status: string;
         createdAt: Date;

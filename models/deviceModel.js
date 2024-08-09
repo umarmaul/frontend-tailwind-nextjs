@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import Location from "@/models/locationModel";
 
-const cameraSchema = new mongoose.Schema({
+const deviceSchema = new mongoose.Schema({
     name: {
         type: String,
-        default: "camera",
+        default: "device",
     },
     ip_address: {
         type: String || Number,
@@ -12,16 +12,20 @@ const cameraSchema = new mongoose.Schema({
     },
     identifier: {
         type: String,
-        default: "camera",
+        default: "device identifier",
+    },
+    specification: {
+        type: String,
+        default: "device specification",
     },
     type: {
         type: String,
-        default: "cctv",
+        default: "device type",
     },
     from_location: {
         type: mongoose.Schema.Types.ObjectId,
         ref: Location,
-        default: null,
+        default: "66ad09b370f0f00db3f3fc6b",
     },
     createdAt: {
         type: Date,
@@ -33,6 +37,6 @@ const cameraSchema = new mongoose.Schema({
     },
 });
 
-const Camera =
-    mongoose.models.cameras || mongoose.model("cameras", cameraSchema);
-export default Camera;
+const Device =
+    mongoose.models.devices || mongoose.model("devices", deviceSchema);
+export default Device;

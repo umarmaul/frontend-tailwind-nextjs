@@ -21,7 +21,15 @@ export async function GET(req: NextRequest) {
                 .sort({ createdAt: "descending" })
                 .skip(skip)
                 .limit(limit)
-                .populate("from_location", "name");
+                .populate({
+                    path: "from_device",
+                    select: "name",
+                    populate: {
+                        path: "from_location",
+                        select: "name",
+                    },
+                });
+
             const totalData = await Sensor.countDocuments({ status });
 
             result.push(...sensorData);

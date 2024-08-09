@@ -50,13 +50,13 @@ export async function GET(req: NextRequest) {
             for (const populate of taskDatas) {
                 let task_data;
                 task_data = await Event.findById(populate.task).populate(
-                    "from_camera",
+                    "from_device",
                     "name"
                 );
 
                 if (task_data === null) {
                     task_data = await Sensor.findById(populate.task).populate(
-                        "from_location",
+                        "from_device",
                         "name"
                     );
                 }

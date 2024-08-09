@@ -86,10 +86,10 @@ export default function IotCard({ data }: { data: IotProps }) {
             >
                 <div className="flex justify-between w-full px-4 items-center">
                     <p className="text-md font-medium text-lg md:text-2xl">
-                        {data.name}
+                        {data.from_device?.name}
                     </p>
                     <p className="text-md border border-black p-1 rounded-lg bg-slate-100">
-                        {data.from_location?.name}
+                        {data.from_device?.from_location?.name}
                     </p>
                 </div>
                 <div className="flex justify-between w-full">
@@ -119,14 +119,16 @@ export default function IotCard({ data }: { data: IotProps }) {
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className="flex flex-col">
-                    <p>Name: {data.name}</p>
-                    <p>From Location: {data.from_location?.name}</p>
+                    <p>Device: {data.from_device?.name}</p>
+                    <p>Location: {data.from_device?.from_location?.name}</p>
                     <p>Temperature: {data.temperature}</p>
                     <p>Humidity: {data.humidity}</p>
                     <p>AQi: {data.AQI}</p>
                     <p>Status: {status}</p>
                     <p>ID: {data._id}</p>
-                    <p>Created At: {data.createdAt.toString()}</p>
+                    <p>
+                        Created At: {new Date(data.createdAt).toLocaleString()}
+                    </p>
                     <div className="mt-4">
                         <label className="block mb-2">Assigned to:</label>
                         <select

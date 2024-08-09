@@ -25,12 +25,14 @@ export default function Table({ data }: TableProps) {
             <tbody>
                 {data.map((item) => (
                     <tr key={item._id} className="text-center">
-                        <td className="py-2 border">{item.name}</td>
+                        <td className="py-2 border">
+                            {item.from_device?.name}
+                        </td>
                         <td className="py-2 border">{item.temperature}</td>
                         <td className="py-2 border">{item.humidity}</td>
                         <td className="py-2 border">{item.AQI}</td>
                         <td className="py-2 border">
-                            {item.from_location?.name}
+                            {item.from_device?.from_location?.name}
                         </td>
                         <td className="py-2 border">{item.status}</td>
                         <td className="py-2 border">

@@ -17,9 +17,13 @@ export type ReportProps = {
         event_type: string;
         event_picture: string;
         description: string;
-        from_camera: {
+        from_device: {
             _id: string;
             name: string;
+            from_location: {
+                _id: string;
+                name: string;
+            };
         };
         status: string;
         createdAt: Date;
@@ -28,14 +32,17 @@ export type ReportProps = {
     };
     sensor?: {
         _id: string;
-        name: string;
         temperature: number;
         humidity: number;
         human_presence: boolean;
         AQI: number;
-        from_location: {
+        from_device: {
             _id: string;
             name: string;
+            from_location: {
+                _id: string;
+                name: string;
+            };
         };
         status: string;
         createdAt: Date;

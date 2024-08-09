@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/utils/dbConfig";
 import Sensor from "@/models/sensorModel";
+import Device from "@/models/deviceModel";
 
 connect();
 
@@ -15,11 +16,20 @@ export async function GET(
     const skip = (page - 1) * limit;
 
     try {
-        const sensorData = await Sensor.find({ from_location: slug })
+        const iots = await Device.find({
+            from_location: slug,
+            type: "iot",
+        }).select("_id");
+        const iotIds = iots.map((iot) => iot._id);
+
+        const sensorData = await Sensor.find({ from_device: { $in: iotIds } })
             .skip(skip)
             .limit(limit)
-            .populate("from_location", "name");
-        const total = await Sensor.countDocuments({ from_location: slug });
+            .populate("from_device", "name");
+
+        const total = await Sensor.countDocuments({
+            from_device: { $in: iotIds },
+        });
         return NextResponse.json({ sensorData, total, page, limit });
     } catch (error) {
         return NextResponse.json(

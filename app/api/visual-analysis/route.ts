@@ -14,7 +14,14 @@ export async function GET(req: NextRequest) {
         const eventData = await Event.find()
             .skip(skip)
             .limit(limit)
-            .populate("from_camera", "name");
+            .populate({
+                path: "from_device",
+                select: "name",
+                populate: {
+                    path: "from_location",
+                    select: "name",
+                },
+            });
         const total = await Event.countDocuments();
         return NextResponse.json({ eventData, total, page, limit });
     } catch (error) {

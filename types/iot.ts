@@ -1,12 +1,15 @@
 export type IotProps = {
     _id: string;
-    name: string;
     temperature: number;
     humidity: number;
     AQI: number;
-    from_location: {
+    from_device: {
         _id: string;
         name: string;
+        from_location: {
+            _id: string;
+            name: string;
+        };
     };
     status: string;
     createdAt: Date;

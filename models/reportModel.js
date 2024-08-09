@@ -11,12 +11,12 @@ const reportSchema = new mongoose.Schema({
     reporter: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User,
-        default: "66ad0731aba7a239702a3f55",
+        default: "66b398bc2f0cb789dd6bd0a8",
     },
     reported_to: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User,
-        default: "66ad0731aba7a239702a3f55",
+        default: "66b398bc2f0cb789dd6bd0a8",
     },
     event: {
         type: mongoose.Schema.Types.ObjectId,

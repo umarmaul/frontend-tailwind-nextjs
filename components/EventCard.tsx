@@ -52,12 +52,19 @@ export default function EventCard({ data }: { data: EventProps }) {
                             <p>Description: {data.description}</p>
                         </div>
                         <div className="flex flex-col w-1/4">
-                            <p>Camera: {data.from_camera.name}</p>
+                            <p>Device: {data.from_device?.name}</p>
+                            <p>
+                                Location:{" "}
+                                {data.from_device?.from_location?.name}
+                            </p>
                             <p>Status: {status}</p>
                         </div>
                         <div className="md:flex flex-col hidden w-1/4">
                             <p>ID: {data._id}</p>
-                            <p>Created At: {data.createdAt.toString()}</p>
+                            <p>
+                                Created At:{" "}
+                                {new Date(data.createdAt).toLocaleString()}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -73,10 +80,13 @@ export default function EventCard({ data }: { data: EventProps }) {
                     <p>Level: {data.event_level}</p>
                     <p>Type: {data.event_type}</p>
                     <p>Description: {data.description}</p>
-                    <p>Camera: {data.from_camera.name}</p>
+                    <p>Device: {data.from_device?.name}</p>
+                    <p>Location: {data.from_device?.from_location?.name}</p>
                     <p>Status: {status}</p>
                     <p>ID: {data._id}</p>
-                    <p>Created At: {data.createdAt.toString()}</p>
+                    <p>
+                        Created At: {new Date(data.createdAt).toLocaleString()}
+                    </p>
                     <button
                         onClick={toggleStatus}
                         className="mt-4 bg-blue-500 text-white rounded p-2"

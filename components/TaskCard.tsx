@@ -69,7 +69,9 @@ export default function TaskCard({ data }: { data: TaskProps }) {
                 )}
                 <div className="md:flex flex-col hidden">
                     <p>ID: {data._id}</p>
-                    <p>Created At: {data.createdAt.toString()}</p>
+                    <p>
+                        Created At: {new Date(data.createdAt).toLocaleString()}
+                    </p>
                 </div>
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
@@ -91,7 +93,9 @@ export default function TaskCard({ data }: { data: TaskProps }) {
                     )}
                     <p>Status: {status}</p>
                     <p>ID: {data._id}</p>
-                    <p>Created At: {data.createdAt.toString()}</p>
+                    <p>
+                        Created At: {new Date(data.createdAt).toLocaleString()}
+                    </p>
                     <button
                         onClick={toggleStatus}
                         className="mt-4 bg-blue-500 text-white rounded p-2"
