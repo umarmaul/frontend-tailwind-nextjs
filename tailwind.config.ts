@@ -23,7 +23,7 @@ const config: Config = {
                 current: "currentColor",
                 transparent: "transparent",
                 white: "#FFFFFF",
-                primary: "#8C51FE",
+                primary: "#8C52FF",
                 stroke: "#E6EBF1",
                 "stroke-dark": "#27303E",
                 dark: {
@@ -318,6 +318,16 @@ const config: Config = {
                 5: "0px 1px 5px rgba(0, 0, 0, 0.2)",
             },
             keyframes: {
+                pulse: {
+                    "0%, 100%": {
+                        transform: "scale(1)",
+                        opacity: "1",
+                    },
+                    "50%": {
+                        transform: "scale(1.5)",
+                        opacity: "0.5",
+                    },
+                },
                 linspin: {
                     "100%": { transform: "rotate(360deg)" },
                 },
@@ -363,6 +373,7 @@ const config: Config = {
                 },
             },
             animation: {
+                "pulse-smooth": "pulse 1.5s infinite",
                 linspin: "linspin 1568.2353ms linear infinite",
                 easespin:
                     "easespin 5332ms cubic-bezier(0.4, 0, 0.2, 1) infinite both",

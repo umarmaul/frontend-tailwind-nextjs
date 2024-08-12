@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Children } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -41,6 +41,11 @@ const menuGroups = [
                 ),
                 label: "Control Room",
                 route: "/dashboard",
+                children: [
+                    { label: "Overview", route: "/dashboard/overview" },
+                    { label: "Connectivity", route: "/dashboard/connectivity" },
+                    { label: "Alerts", route: "/dashboard/alerts" },
+                ],
             },
             {
                 icon: (
@@ -197,7 +202,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     return (
         <ClickOutside onClick={() => setSidebarOpen(false)}>
             <aside
-                className={`absolute left-0 top-0 z-40 flex h-screen w-72.5 flex-col overflow-y-hidden border-r border-stroke bg-white dark:border-stroke-dark dark:bg-gray-dark lg:static lg:translate-x-0 ${
+                className={`absolute left-0 top-0 z-50 flex h-screen w-72.5 flex-col overflow-y-hidden border-r border-stroke bg-white lg:static lg:translate-x-0 ${
                     sidebarOpen
                         ? "translate-x-0 duration-300 ease-linear"
                         : "-translate-x-full"
@@ -242,7 +247,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <nav className="mt-1 px-4 lg:px-6">
                         {menuGroups.map((group, groupIndex) => (
                             <div key={groupIndex}>
-                                <h3 className="mb-5 text-sm font-medium text-dark-4 dark:text-dark-6">
+                                <h3 className="mb-5 text-sm font-medium text-dark-4">
                                     {group.name}
                                 </h3>
 
