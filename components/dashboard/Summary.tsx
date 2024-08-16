@@ -24,7 +24,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="lime"
                                         />
                                     </svg>
@@ -40,7 +40,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="red"
                                         />
                                     </svg>
@@ -59,7 +59,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="lime"
                                         />
                                     </svg>
@@ -75,7 +75,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="red"
                                         />
                                     </svg>
@@ -100,7 +100,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="lime"
                                         />
                                     </svg>
@@ -116,7 +116,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="red"
                                         />
                                     </svg>
@@ -135,7 +135,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="lime"
                                         />
                                     </svg>
@@ -151,7 +151,7 @@ export default function Summary() {
                                             cx="5"
                                             cy="5"
                                             r="4"
-                                            stroke-width="0.4"
+                                            strokeWidth="0.4"
                                             fill="red"
                                         />
                                     </svg>

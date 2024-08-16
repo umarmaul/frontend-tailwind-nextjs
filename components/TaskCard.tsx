@@ -41,8 +41,35 @@ export default function TaskCard({ data }: { data: TaskProps }) {
     };
 
     const handleReport = async () => {
-        setIsModalOpen(false);
-        router.push(`/dashboard/reports/${data._id}`);
+        const newStatus =
+            status === "in progress" ? "in approval" : "in progress";
+        const type = isEventTask ? "camera" : "iot";
+
+        try {
+            const response = await fetch("/api/task-accept", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: data._id,
+                    status: newStatus,
+                    task: data.task._id,
+                    type: type,
+                }),
+            });
+            if (response.ok) {
+                setStatus(newStatus);
+                alert("Task Updated successfully");
+            } else {
+                console.error("Failed to update status");
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+        } finally {
+            setIsModalOpen(false);
+            router.push(`/dashboard/reports/${data._id}`);
+        }
     };
 
     return (

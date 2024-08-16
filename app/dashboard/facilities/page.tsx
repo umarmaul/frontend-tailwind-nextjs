@@ -34,7 +34,7 @@ export default function Facilities() {
     ]);
 
     const placeholderImage =
-        "http://194.238.16.213:1122/event/event_picture_1723046992164.png";
+        "http://194.238.16.213:1122/event/event_picture_1723787821727.png";
 
     const fetchUsers = async () => {
         try {

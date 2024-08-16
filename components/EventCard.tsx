@@ -28,7 +28,7 @@ export default function EventCard({ data }: { data: EventProps }) {
     }, [isModalOpen]);
 
     const toggleStatus = async () => {
-        const newStatus = status === "new" ? "approved" : "new";
+        const newStatus = status === "unassigned" ? "resolved" : "unassigned";
         try {
             const response = await fetch("/api/event-status", {
                 method: "POST",
@@ -77,7 +77,7 @@ export default function EventCard({ data }: { data: EventProps }) {
         <>
             <div
                 className={`flex justify-around items-center my-6 border rounded-lg p-4 space-x-4 text-sm md:text-lg shadow-lg cursor-pointer transition-colors duration-300 ${
-                    status === "approved" ? "bg-green-50" : "bg-red-50"
+                    status === "resolved" ? "bg-green-50" : "bg-red-50"
                 }`}
                 onClick={() => setIsModalOpen(true)}
             >
@@ -101,7 +101,6 @@ export default function EventCard({ data }: { data: EventProps }) {
                         <div className="hidden md:flex flex-col w-full text-md">
                             <p className="text-sm py-2">{data.description}</p>
                             <p>Status: {status}</p>
-                            <p>ID: {data._id}</p>
                             <p>
                                 Created At:{" "}
                                 {new Date(data.createdAt).toLocaleString()}
@@ -143,8 +142,11 @@ export default function EventCard({ data }: { data: EventProps }) {
                             </p>
                         </div>
                     </div>
-
-                    <div className="mt-4">
+                    <div
+                        className={`mt-4 ${
+                            status === "unassigned" ? "block" : "hidden"
+                        }`}
+                    >
                         <label className="block mb-2">Assigned to:</label>
                         <select
                             value={selectedUser}
@@ -159,7 +161,12 @@ export default function EventCard({ data }: { data: EventProps }) {
                             ))}
                         </select>
                     </div>
-                    <div className="mt-4">
+
+                    <div
+                        className={`mt-4 ${
+                            status === "unassigned" ? "block" : "hidden"
+                        }`}
+                    >
                         <label className="block mb-2">Description:</label>
                         <textarea
                             value={description}
@@ -167,13 +174,16 @@ export default function EventCard({ data }: { data: EventProps }) {
                             className="border p-2 rounded w-full"
                         ></textarea>
                     </div>
+
                     <div className="flex flex-col">
-                        <button
-                            onClick={handleSubmit}
-                            className="mt-4 bg-primary text-white py-2 px-4 rounded"
-                        >
-                            Submit Task
-                        </button>
+                        {status === "unassigned" && (
+                            <button
+                                onClick={handleSubmit}
+                                className="mt-4 bg-primary text-white py-2 px-4 rounded"
+                            >
+                                Submit Task
+                            </button>
+                        )}
                         <button
                             onClick={toggleStatus}
                             className="mt-4 bg-red-500 text-white rounded p-2 uppercase"

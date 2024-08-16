@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Camera() {
     return (
-        <div className="flex flex-col w-full h-full max-w-md">
+        <div className="flex flex-col w-full h-full lg:max-w-md">
             <h3 className="text-3xl font-medium text-primary mb-2">Camera</h3>
             <div className="flex flex-col space-y-6 h-full justify-center w-full">
                 {/* card 1 */}

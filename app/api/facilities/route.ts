@@ -50,7 +50,7 @@ export async function GET() {
 
                 const totalEvents = await Event.countDocuments({
                     from_device: camera._doc._id.toString(),
-                    status: "new",
+                    status: "unassigned",
                 });
 
                 totalDevices.camera += totalEvents;
@@ -63,7 +63,7 @@ export async function GET() {
             for (const sensor of sensors) {
                 const totalSensors = await Sensor.countDocuments({
                     from_device: sensor._doc._id.toString(),
-                    status: "new",
+                    status: "unassigned",
                 });
 
                 totalDevices.sensor += totalSensors;

@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "10");
 
     try {
-        const statuses = ["new", "approved"];
+        const statuses = ["unassigned", "resolved"];
         const result = [];
         const total = [];
 

@@ -10,7 +10,7 @@ export default function LeadingIndicatorList() {
     const [error, setError] = useState<null | string>(null);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const statuses = ["new", "approved"];
+    const statuses = ["unassigned", "resolved"];
     const [iotPages, setIotPages] = useState<{ [key: string]: IotProps[] }>({});
 
     useEffect(() => {
@@ -26,11 +26,11 @@ export default function LeadingIndicatorList() {
                 }
                 const data = await res.json();
                 const groupedIots: { [key: string]: IotProps[] } = {
-                    new: data.sensorData.filter(
-                        (iot: IotProps) => iot.status === "new"
+                    unassigned: data.sensorData.filter(
+                        (iot: IotProps) => iot.status === "unassigned"
                     ),
-                    approved: data.sensorData.filter(
-                        (iot: IotProps) => iot.status === "approved"
+                    resolved: data.sensorData.filter(
+                        (iot: IotProps) => iot.status === "resolved"
                     ),
                 };
                 setIotPages(groupedIots);

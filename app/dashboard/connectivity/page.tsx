@@ -1,7 +1,12 @@
-import React from "react";
+import Breadcrumb from "@/components/Breadcrumbs";
 
-const page = () => {
-    return <div>page</div>;
-};
-
-export default page;
+export default function Connectivity() {
+    return (
+        <div>
+            <Breadcrumb pageName="Dashboard / Connectivity" />
+            <div className="flex mx-auto min-h-[80vh] justify-center items-center bg-white rounded-lg">
+                no content
+            </div>
+        </div>
+    );
+}

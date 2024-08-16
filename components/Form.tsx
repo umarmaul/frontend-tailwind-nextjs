@@ -14,7 +14,6 @@ export default function Form() {
         name: "",
         email: "",
         reportDetails: "",
-        choice: "",
         signature: "",
     });
 
@@ -23,9 +22,9 @@ export default function Form() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch("/api/leading-indicator");
+            const response = await fetch("/api/sensor-report");
             const result = await response.json();
-            setTableData(result.sensorData);
+            setTableData(result);
             setLoading(false);
         };
 
@@ -70,11 +69,11 @@ export default function Form() {
     return (
         <div className="container mx-auto p-4">
             <div className="bg-white p-8 rounded shadow-md">
-                <h2 className="text-2xl font-bold mb-4">Formulir Laporan</h2>
+                <h2 className="text-2xl font-bold mb-4">Report Form</h2>
                 <form className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
-                            Nama:
+                            Name:
                         </label>
                         <input
                             type="text"
@@ -98,7 +97,7 @@ export default function Form() {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
-                            Detail Laporan:
+                            Report description:
                         </label>
                         <textarea
                             name="reportDetails"
@@ -109,29 +108,13 @@ export default function Form() {
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
-                            Pilihan:
-                        </label>
-                        <select
-                            name="choice"
-                            value={data.choice}
-                            onChange={handleInputChange}
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-                        >
-                            <option value="">Pilih salah satu</option>
-                            <option value="option1">Opsi 1</option>
-                            <option value="option2">Opsi 2</option>
-                            <option value="option3">Opsi 3</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                            Tanda Tangan:
+                            Sign:
                         </label>
                         <SignatureCanvas
                             penColor="black"
                             ref={sigCanvas}
                             canvasProps={{
-                                width: 100,
+                                width: 200,
                                 height: 100,
                                 className:
                                     "border-2 border-gray-300 rounded-md",
@@ -143,7 +126,7 @@ export default function Form() {
                             onClick={handleClearSignature}
                             className="mt-2 text-blue-500"
                         >
-                            Hapus Tanda Tangan
+                            Clear
                         </button>
                     </div>
                 </form>
@@ -152,7 +135,7 @@ export default function Form() {
                 onClick={handlePrint}
                 className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
             >
-                Unduh sebagai PDF
+                Print Report
             </button>
 
             {!loading && (

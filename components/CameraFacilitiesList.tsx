@@ -12,7 +12,7 @@ export default function CameraFacilitiesList() {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const statuses = ["new", "approved"];
+    const statuses = ["unassigned", "resolved"];
     const [cameraPages, setCameraPages] = useState<{
         [key: string]: EventProps[];
     }>({});
@@ -32,11 +32,11 @@ export default function CameraFacilitiesList() {
                 }
                 const data = await res.json();
                 const groupedCameras: { [key: string]: EventProps[] } = {
-                    new: data.eventData.filter(
-                        (camera: EventProps) => camera.status === "new"
+                    unassigned: data.eventData.filter(
+                        (camera: EventProps) => camera.status === "unassigned"
                     ),
-                    approved: data.eventData.filter(
-                        (camera: EventProps) => camera.status === "approved"
+                    resolved: data.eventData.filter(
+                        (camera: EventProps) => camera.status === "resolved"
                     ),
                 };
                 setCameraPages(groupedCameras);

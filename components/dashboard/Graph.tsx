@@ -23,27 +23,30 @@ ChartJS.register(
     Legend
 );
 
-export default function SensorGraph() {
-    const data = {
-        labels: [
-            "18:00",
-            "20:00",
-            "22:00",
-            "00:00",
-            "02:00",
-            "04:00",
-            "06:00",
-            "08:00",
-            "10:00",
-            "12:00",
-            "14:00",
-            "16:00",
-            "18:00",
-        ],
+interface SensorGraphProps {
+    device: string;
+    parameters: string;
+    data: { value: number; time: Date }[];
+}
+
+export default function SensorGraph({
+    device,
+    parameters,
+    data,
+}: SensorGraphProps) {
+    const labels = data.map((record) =>
+        new Date(record.time).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        })
+    );
+
+    const graphData = {
+        labels,
         datasets: [
             {
-                label: "Temperature (°C)",
-                data: [32, 30, 28, 29, 31, 35, 38, 40, 42, 39, 36, 34, 32],
+                label: parameters,
+                data: data.map((record) => record.value),
                 borderColor: "rgba(75, 192, 192, 1)",
                 backgroundColor: "rgba(75, 192, 192, 0.2)",
                 fill: true,
@@ -61,20 +64,19 @@ export default function SensorGraph() {
             },
             title: {
                 display: true,
-                text: "Sensor Data from IoT",
+                text: `Data from ${device}`,
             },
         },
         scales: {
             y: {
                 beginAtZero: true,
                 min: 0,
-                max: 60,
                 ticks: {
                     stepSize: 5,
                 },
                 title: {
                     display: true,
-                    text: "Temperature (°C)",
+                    text: "Value",
                 },
             },
         },
@@ -82,7 +84,7 @@ export default function SensorGraph() {
 
     return (
         <div className="flex justify-center flex-1">
-            <Line data={data} options={options} />
+            <Line data={graphData} options={options} />
         </div>
     );
 }

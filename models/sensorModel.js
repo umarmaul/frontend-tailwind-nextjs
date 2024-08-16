@@ -25,7 +25,7 @@ const sensorSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: "new",
+        default: "unassigned",
     },
     createdAt: {
         type: Date,

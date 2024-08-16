@@ -29,7 +29,7 @@ export async function GET(
             devices.map(async (device) => {
                 const totalAlerts = await Sensor.countDocuments({
                     from_device: device._id,
-                    status: "new",
+                    status: "unassigned",
                 });
                 return {
                     ...device.toObject(),

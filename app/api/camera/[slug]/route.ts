@@ -14,7 +14,7 @@ export async function GET(
     const limit = parseInt(searchParams.get("limit") || "10");
 
     try {
-        const statuses = ["new", "approved"];
+        const statuses = ["unassigned", "resolved"];
         const result = [];
         const total = [];
 
